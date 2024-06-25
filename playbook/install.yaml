@@ -1,0 +1,16 @@
+- hosts: APACHE
+  tasks:
+  - name: run apache install
+    command: apt install -y apache2
+  - name: create a repo
+    command: mkdir /root/test
+  - name: create file
+    command: touch /root/test/fichier_test
+  - name: change permission on file
+    command: chmod 400 /root/test/fichier_test
+  - name: cdelete index.html
+    command: rm /var/www/html/index.html
+  - name: Template for apache index
+    ansible.builtin.template:
+      src: template/index.html
+      dest: /var/www/html/index.html
