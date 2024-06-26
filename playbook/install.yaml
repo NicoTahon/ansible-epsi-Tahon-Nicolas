@@ -27,3 +27,8 @@
       file:
         path: /root/{{path_file}}
         state: touch
+    - name: change motd
+      copy : 
+        src: motd
+        dest: /etc/motd
+        mode: "0644"
