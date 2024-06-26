@@ -2,7 +2,9 @@
 - hosts: PRD_APACHE
   tasks:
     - name: run apache install
-      command: apt install -y apache2
+      apt:
+        name: apache2
+        state: present
     - name: create a repo
       ansible.builtin.file:
         path: /root/test
