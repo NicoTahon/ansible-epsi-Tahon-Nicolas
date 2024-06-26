@@ -1,16 +1,27 @@
-- hosts: APACHE
+---
+- hosts: PRD_APACHE
   tasks:
-  - name: run apache install
-    command: apt install -y apache2
-  - name: create a repo
-    command: mkdir /root/test
-  - name: create file
-    command: touch /root/test/fichier_test
-  - name: change permission on file
-    command: chmod 400 /root/test/fichier_test
-  - name: cdelete index.html
-    command: rm /var/www/html/index.html
-  - name: Template for apache index
-    ansible.builtin.template:
-      src: template/index.html
-      dest: /var/www/html/index.html
+    - name: run apache install
+      command: apt install -y apache2
+    - name: create a repo
+      ansible.builtin.file:
+        path: /root/test
+        state: directory
+        mode: "0755"
+    - name: create file
+      ansible.builtin.file:
+        path: /root/test/test_FileModule.txt
+        state: touch
+        mode: "0755"
+    - name: delete index.html
+      file:
+        path: /var/www/html/index.html
+        state: absent
+    - name: Template for apache index
+      ansible.builtin.template:
+        src: template/index.html
+        dest: /var/www/html/index.html
+    - name: Gather Facts check
+      file:
+        path: /root/{{path_file}}
+        state: touch
